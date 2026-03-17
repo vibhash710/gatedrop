@@ -3,12 +3,14 @@ import { NextResponse } from "next/server"
 
 export default auth((req) => {
   const isLoggedIn = !!req.auth
-  const path = req.nextUrl.pathname
-    
-  const isOnDashboard = path.startsWith("/dashboard")
 
-  if (isOnDashboard && !isLoggedIn) {
-    return NextResponse.redirect(new URL("/login", req.url))
+  if (!isLoggedIn) {
+    const loginUrl = new URL("/login", req.url)
+
+    // redirect back after login
+    loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname)
+
+    return NextResponse.redirect(loginUrl)
   }
 
   return NextResponse.next()
