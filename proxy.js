@@ -8,7 +8,7 @@ export default auth((req) => {
     const loginUrl = new URL("/login", req.url)
 
     // redirect back after login
-    loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname)
+    loginUrl.searchParams.set("callbackUrl", req.nextUrl.href)
 
     return NextResponse.redirect(loginUrl)
   }
