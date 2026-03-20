@@ -36,40 +36,46 @@ export default function SignupPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-            <div className="bg-white p-8 rounded-lg shadow w-full max-w-md">
-                <h1 className="text-2xl font-bold mb-6 text-center">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-neutral-950">
+            <div className="bg-white dark:bg-neutral-900 p-8 rounded-lg shadow w-full max-w-md">
+                <h1 className="text-2xl font-bold mb-6 text-center text-black dark:text-white">
                     Create your account
                 </h1>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium mb-1">Name</label>
+                        <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                            Name
+                        </label>
                         <input
                             name="name"
                             type="text"
                             required
-                            className="w-full border rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black"
+                            className="w-full border dark:border-neutral-700 rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-neutral-800 dark:text-white"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium mb-1">Email</label>
+                        <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                            Email
+                        </label>
                         <input
                             name="email"
                             type="email"
                             required
-                            className="w-full border rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black"
+                            className="w-full border dark:border-neutral-700 rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-neutral-800 dark:text-white"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium mb-1">Password</label>
+                        <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                            Password
+                        </label>
                         <input
                             name="password"
                             type="password"
                             required
-                            className="w-full border rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black"
+                            className="w-full border dark:border-neutral-700 rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-neutral-800 dark:text-white"
                         />
                     </div>
 
@@ -80,15 +86,15 @@ export default function SignupPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-black text-white py-2 rounded-md text-sm font-medium hover:bg-gray-800 disabled:opacity-50"
+                        className="w-full bg-black dark:bg-white text-white dark:text-black py-2 rounded-md text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 disabled:opacity-50"
                     >
                         {loading ? "Creating account..." : "Sign up"}
                     </button>
                 </form>
 
-                <p className="text-center text-sm text-gray-600 mt-4">
+                <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
                     Already have an account?{" "}
-                    <Link href="/login" className="text-black font-medium hover:underline">
+                    <Link href="/login" className="text-black dark:text-white font-medium hover:underline">
                         Log in
                     </Link>
                 </p>
