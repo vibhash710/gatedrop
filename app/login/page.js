@@ -11,6 +11,8 @@ export default function LoginPage() {
     const router = useRouter()
     const searchParams = useSearchParams()
 
+    const callbackUrl = searchParams.get("callbackUrl") || "/dashboard"
+
     function getAuthErrorMessage(error) {
         switch (error) {
             case "OAuthAccountNotLinked":
@@ -51,7 +53,7 @@ export default function LoginPage() {
                 return
             }
 
-            router.push("/dashboard")
+            router.push(callbackUrl)
             router.refresh()
 
         } catch (err) {
@@ -71,7 +73,7 @@ export default function LoginPage() {
                 {/* OAuth buttons */}
                 <div className="space-y-3 mb-6">
                     <button
-                        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                        onClick={() => signIn("google", { callbackUrl })}
                         className="w-full flex items-center justify-center gap-2 border dark:border-neutral-700 rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-50 dark:hover:bg-neutral-800 text-black dark:text-white"
                     >
                         <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -84,11 +86,16 @@ export default function LoginPage() {
                     </button>
 
                     <button
-                        onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
+                        onClick={() => signIn("github", { callbackUrl })}
                         className="w-full flex items-center justify-center gap-2 border dark:border-neutral-700 rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-50 dark:hover:bg-neutral-800 text-black dark:text-white"
                     >
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385..." />
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="w-4 h-4"
+                        >
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 4.99 3.2 9.23 7.64 10.73.56.1.76-.24.76-.53v-1.85c-3.1.68-3.75-1.49-3.75-1.49-.5-1.27-1.22-1.6-1.22-1.6-.99-.68.07-.67.07-.67 1.1.08 1.68 1.13 1.68 1.13.97 1.67 2.54 1.19 3.16.91.1-.7.38-1.19.7-1.46-2.48-.28-5.08-1.24-5.08-5.52 0-1.22.43-2.21 1.13-2.99-.11-.28-.49-1.4.11-2.92 0 0 .92-.29 3.02 1.14a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.02-1.14 3.02-1.14.6 1.52.22 2.64.11 2.92.7.78 1.13 1.77 1.13 2.99 0 4.29-2.6 5.24-5.08 5.52.39.34.73 1.01.73 2.04v3.02c0 .29.2.64.77.53A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
                         </svg>
                         Continue with GitHub
                     </button>

@@ -18,7 +18,11 @@ export default function SignupPage() {
         const formData = new FormData(e.target)
 
         try {
-            const result = await signUpAction(formData)
+            const result = await signUpAction({
+                name: formData.get("name"),
+                email: formData.get("email").toLowerCase().trim(),
+                password: formData.get("password"),
+            })
 
             if (result?.error) {
                 setError(result.error)
