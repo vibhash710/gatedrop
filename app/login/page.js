@@ -4,8 +4,9 @@ import { useState, useEffect } from "react"
 import { signIn } from "next-auth/react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
+import { Suspense } from "react"
 
-export default function LoginPage() {
+function LoginForm() {
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const router = useRouter()
@@ -146,7 +147,7 @@ export default function LoginPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-black dark:bg-white text-white dark:text-black py-2 rounded-md text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 disabled:opacity-50"
+                        className="w-full bg-black dark:bg-white text-white dark:text-black py-2 rounded-md text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? "Signing in..." : "Sign in"}
                     </button>
@@ -160,5 +161,13 @@ export default function LoginPage() {
                 </p>
             </div>
         </div>
+    )
+}
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={null}>
+            <LoginForm />
+        </Suspense>
     )
 }
