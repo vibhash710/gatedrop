@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { signUpAction } from "@/lib/actions/auth.actions"
+import { signIn } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
@@ -26,6 +27,17 @@ export default function SignupPage() {
 
             if (result?.error) {
                 setError(result.error)
+                return
+            }
+
+            const login = await signIn("credentials", {
+                email,
+                password,
+                redirect: false,
+            })
+
+            if (login?.error) {
+                setError("Account created but login failed")
                 return
             }
 

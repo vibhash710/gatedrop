@@ -14,7 +14,7 @@ datasource db {
 model User {
   id            String     @id @default(cuid())
   name          String?
-  email         String     @unique
+  email         String?    @unique
   password      String?
   image         String?
   role          Role       @default(BUYER)
@@ -22,7 +22,6 @@ model User {
   emailVerified DateTime?
 
   accounts      Account[]
-  sessions      Session[]
   products      Product[]
   purchases     Purchase[]
 }
@@ -46,26 +45,10 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
-}
-
 enum Role {
   BUYER
   SELLER
+  ADMIN
 }
 
 model Product {
