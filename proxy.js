@@ -5,10 +5,10 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth?.user
   const path = req.nextUrl.pathname
   const user = req.auth?.user
+  const hasRole = !!user?.role
 
   const isOnDashboard = path.startsWith("/dashboard")
   const isOnOnboarding = path === "/onboarding"
-
 
   if (isOnDashboard && !isLoggedIn) {
     const loginUrl = new URL("/login", req.url)
@@ -17,11 +17,11 @@ export default auth((req) => {
     return NextResponse.redirect(loginUrl)
   }
 
-  if (isLoggedIn && !user?.role && !isOnOnboarding) {
+  if (isLoggedIn && !hasRole && !isOnOnboarding) {
     return NextResponse.redirect(new URL("/onboarding", req.url))
   }
 
-  if (isLoggedIn && user?.role && isOnOnboarding) {
+  if (isLoggedIn && hasRole && isOnOnboarding) {
     return NextResponse.redirect(new URL("/dashboard", req.url))
   }
 
