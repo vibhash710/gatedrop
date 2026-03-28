@@ -1,6 +1,7 @@
 import NextAuthSessionProvider from "@/components/SessionProvider"
 import { Geist } from "next/font/google"
 import ThemeProvider from "@/components/ThemeProvider"
+import { TooltipProvider } from "@/components/ui/tooltip"
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"] })
@@ -15,9 +16,11 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body className={geist.className}>
         <ThemeProvider>
-        <NextAuthSessionProvider>
-        {children}
-        </NextAuthSessionProvider>
+          <NextAuthSessionProvider>
+            <TooltipProvider>
+              {children}
+            </TooltipProvider>
+          </NextAuthSessionProvider>
         </ThemeProvider>
       </body>
     </html>
