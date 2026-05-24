@@ -5,16 +5,15 @@ import { signUpAction } from "@/lib/actions/auth.actions"
 import { signIn } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 export default function SignupPage() {
-    const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const router = useRouter()
 
     async function handleSubmit(e) {
         e.preventDefault()
         setLoading(true)
-        setError("")
 
         const formData = new FormData(e.target)
 
@@ -26,7 +25,7 @@ export default function SignupPage() {
             })
 
             if (result?.error) {
-                setError(result.error)
+                toast.error(result.error)
                 return
             }
 
@@ -37,7 +36,7 @@ export default function SignupPage() {
             })
 
             if (login?.error) {
-                setError("Account created but login failed")
+                toast.error("Account created but login failed")
                 return
             }
 
@@ -45,7 +44,7 @@ export default function SignupPage() {
             router.refresh()
 
         } catch (err) {
-            setError("Something went wrong")
+            toast.error("Something went wrong")
         } finally {
             setLoading(false)
         }
@@ -94,10 +93,6 @@ export default function SignupPage() {
                             className="w-full border dark:border-neutral-700 rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-neutral-800 dark:text-white"
                         />
                     </div>
-
-                    {error && (
-                        <p className="text-red-500 text-sm">{error}</p>
-                    )}
 
                     <button
                         type="submit"

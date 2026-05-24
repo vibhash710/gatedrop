@@ -7,25 +7,31 @@ import { togglePublishAction, deleteProductAction } from "@/lib/actions/product.
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Edit, Trash2, Eye, EyeOff, Loader2, ShoppingBag } from "lucide-react"
+import { toast } from "sonner"
 
 export default function ProductCard({ product }) {
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
 
   async function handleTogglePublish() {
     setLoading(true)
-    setError("")
     const result = await togglePublishAction(product.id)
-    if (result?.error) setError(result.error)
+    if (result?.error) {
+      toast.error(result.error)
+    } else {
+      toast.success(product.published ? "Product unpublished" : "Product published")
+    }
     setLoading(false)
   }
 
   async function handleDelete() {
     if (!confirm("Are you sure you want to delete this product?")) return
     setLoading(true)
-    setError("")
     const result = await deleteProductAction(product.id)
-    if (result?.error) setError(result.error)
+    if (result?.error) {
+      toast.error(result.error)
+    } else {
+      toast.success("Product deleted")
+    }
     setLoading(false)
   }
 
@@ -73,10 +79,6 @@ export default function ProductCard({ product }) {
             {product._count.purchases} sale{product._count.purchases !== 1 ? "s" : ""}
           </span>
         </div>
-
-        {error && (
-          <p className="text-red-500 text-xs mt-1">{error}</p>
-        )}
 
         {/* Actions */}
         <div className="flex items-center gap-2 mt-3">

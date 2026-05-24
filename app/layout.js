@@ -2,6 +2,7 @@ import NextAuthSessionProvider from "@/components/SessionProvider"
 import { Geist } from "next/font/google"
 import ThemeProvider from "@/components/ThemeProvider"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { Toaster } from "@/components/ui/sonner"
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"] })
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
           <NextAuthSessionProvider>
             <TooltipProvider>
               {children}
+              <Toaster richColors position="top-right" duration={3000} />
             </TooltipProvider>
           </NextAuthSessionProvider>
         </ThemeProvider>

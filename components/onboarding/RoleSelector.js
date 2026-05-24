@@ -4,6 +4,7 @@ import { useState } from "react"
 import { selectRoleAction } from "@/lib/actions/user.actions"
 import { ShoppingBag, Store, ArrowRight, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
 
 const roles = [
   {
@@ -27,22 +28,20 @@ const roles = [
 export default function RoleSelector({ userName }) {
   const [selected, setSelected] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
 
   async function handleContinue() {
     if (!selected) return
     setLoading(true)
-    setError("")
 
     try {
       const result = await selectRoleAction(selected)
       if (result?.error) {
-        setError(result.error)
+        toast.error(result.error)
         setLoading(false)
       }
       // if no error, selectRoleAction redirects server-side
     } catch (err) {
-      setError("Something went wrong")
+      toast.error("Something went wrong")
       setLoading(false)
     }
   }
@@ -109,10 +108,6 @@ export default function RoleSelector({ userName }) {
           )
         })}
       </div>
-
-      {error && (
-        <p className="text-red-500 text-sm text-center">{error}</p>
-      )}
 
       {/* Continue button */}
       <Button

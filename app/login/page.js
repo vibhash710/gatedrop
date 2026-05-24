@@ -5,9 +5,9 @@ import { signIn } from "next-auth/react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense } from "react"
+import { toast } from "sonner"
 
 function LoginForm() {
-    const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -29,16 +29,14 @@ function LoginForm() {
 
     useEffect(() => {
         const errorParam = searchParams.get("error")
-
         if (errorParam) {
-            setError(getAuthErrorMessage(errorParam))
+            toast.error(getAuthErrorMessage(errorParam))
         }
     }, [searchParams])
 
     async function handleSubmit(e) {
         e.preventDefault()
         setLoading(true)
-        setError("")
 
         const formData = new FormData(e.target)
 
@@ -50,7 +48,7 @@ function LoginForm() {
             })
 
             if (result?.error) {
-                setError("Invalid credentials. If you signed up with Google or GitHub, try those instead.")
+                toast.error("Invalid credentials. If you signed up with Google or GitHub, try those instead.")
                 return
             }
 
@@ -58,7 +56,7 @@ function LoginForm() {
             router.refresh()
 
         } catch (err) {
-            setError("Something went wrong")
+            toast.error("Something went wrong")
         } finally {
             setLoading(false)
         }
@@ -139,10 +137,6 @@ function LoginForm() {
                             className="w-full border dark:border-neutral-700 rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-neutral-800 dark:text-white"
                         />
                     </div>
-
-                    {error && (
-                        <p className="text-red-500 text-sm">{error}</p>
-                    )}
 
                     <button
                         type="submit"
