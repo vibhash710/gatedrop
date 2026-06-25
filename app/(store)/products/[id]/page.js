@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { ShoppingBag, Calendar, FileDown } from "lucide-react"
 import BuyButton from "@/components/store/BuyButton"
+import { Suspense } from "react"
 
 // ISR — revalidate every 60 seconds
 export const revalidate = 60
@@ -120,11 +121,15 @@ export default async function ProductDetailPage({ params }) {
 
           {/* Buy button */}
           <div className="mt-6">
-            <BuyButton
-              productId={product.id}
-              alreadyPurchased={alreadyPurchased}
-              isLoggedIn={!!session}
-            />
+            <Suspense fallback={null}>
+              <BuyButton
+                productId={product.id}
+                alreadyPurchased={alreadyPurchased}
+                isLoggedIn={!!session}
+                userEmail={session?.user?.email}
+                userName={session?.user?.name}
+              />
+            </Suspense>
           </div>
 
           {/* What you get */}

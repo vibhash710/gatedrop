@@ -70,7 +70,7 @@ model Product {
 model Purchase {
   id              String   @id @default(cuid())
   createdAt       DateTime @default(now())
-  stripeSessionId String   @unique
+  paymentId String   @unique
 
   userId          String
   user            User     @relation(fields: [userId], references: [id])
