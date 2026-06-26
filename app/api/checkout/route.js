@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { razorpay } from "@/lib/razorpay"
+import { getRazorpay } from "@/lib/razorpay"
 
 export async function POST(req) {
   try {
@@ -52,6 +52,7 @@ export async function POST(req) {
       )
     }
 
+    const razorpay = getRazorpay()
     // Create Razorpay order
     const order = await razorpay.orders.create({
       amount: Math.round(product.price * 100), // paise
