@@ -12,7 +12,7 @@ export const ourFileRouter = {
       if (session.user.role !== "SELLER") throw new Error("Not a seller")
       return { userId: session.user.id }
     })
-    .onUploadComplete(async ({ metadata, file }) => {
+    .onUploadComplete(async ({ file }) => {
       return { url: file.url }
     }),
 
@@ -30,7 +30,7 @@ export const ourFileRouter = {
       if (session.user.role !== "SELLER") throw new Error("Not a seller")
       return { userId: session.user.id }
     })
-    .onUploadComplete(async ({ metadata, file }) => {
+    .onUploadComplete(async ({ file }) => {
       return { key: file.key, url: file.url }
     }),
 }

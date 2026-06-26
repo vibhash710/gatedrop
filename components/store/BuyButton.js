@@ -28,10 +28,12 @@ export default function BuyButton({ productId, alreadyPurchased, isLoggedIn, use
     return (
       <Button
         className="w-full"
-        onClick={() => router.push(`/api/download/${productId}`)}
+        asChild
       >
-        <Download className="w-4 h-4 mr-2" />
-        Download
+        <a href={`/api/download/${productId}`}>
+          <Download className="w-4 h-4 mr-2" />
+          Download
+        </a>
       </Button>
     )
   }
