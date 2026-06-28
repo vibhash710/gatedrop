@@ -6,7 +6,7 @@ import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense } from "react"
 import { toast } from "sonner"
-import { LogIn, Eye, EyeOff } from "lucide-react"
+import { LogIn, Eye, EyeOff, Mail, Lock } from "lucide-react"
 
 function LoginForm() {
     const [loading, setLoading] = useState(false)
@@ -126,12 +126,16 @@ function LoginForm() {
                         <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                             Email
                         </label>
-                        <input
-                            name="email"
-                            type="email"
-                            required
-                            className="w-full border dark:border-neutral-700 rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-neutral-800 dark:text-white"
-                        />
+                        <div className="relative">
+                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                            <input
+                                name="email"
+                                type="email"
+                                required
+                                className="w-full border dark:border-neutral-700 rounded-md pl-10 pr-4 py-3 text-sm outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-neutral-800 dark:text-white"
+                                placeholder="you@example.com"
+                            />
+                        </div>
                     </div>
 
                     <div>
@@ -139,11 +143,13 @@ function LoginForm() {
                             Password
                         </label>
                         <div className="relative">
+                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                             <input
                                 name="password"
                                 type={showPassword ? "text" : "password"}
                                 required
-                                className="w-full border dark:border-neutral-700 rounded-md px-3 py-2 pr-10 text-sm outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-neutral-800 dark:text-white"
+                                className="w-full border dark:border-neutral-700 rounded-md pl-10 pr-4 py-3 text-sm outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-neutral-800 dark:text-white"
+                                placeholder="Enter your password"
                             />
 
                             <button
