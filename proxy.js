@@ -9,6 +9,11 @@ export default auth((req) => {
 
   const isOnDashboard = path.startsWith("/dashboard")
   const isOnOnboarding = path === "/onboarding"
+  const isOnAuthPage = path === "/login" || path === "/signup"
+
+  if (isLoggedIn && isOnAuthPage) {
+    return NextResponse.redirect(new URL("/dashboard", req.url))
+  }
 
   if (isOnDashboard && !isLoggedIn) {
     const loginUrl = new URL("/login", req.url)
@@ -29,5 +34,5 @@ export default auth((req) => {
 })
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/onboarding"],
+  matcher: ["/dashboard/:path*", "/onboarding", "/login", "/signup"],
 }
