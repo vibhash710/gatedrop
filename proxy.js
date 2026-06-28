@@ -12,7 +12,7 @@ export default auth((req) => {
   const isOnAuthPage = path === "/login" || path === "/signup"
 
   if (isLoggedIn && isOnAuthPage) {
-    return NextResponse.redirect(new URL("/dashboard", req.url))
+    return NextResponse.redirect(new URL("/", req.url))
   }
 
   if (isOnDashboard && !isLoggedIn) {
@@ -27,7 +27,7 @@ export default auth((req) => {
   }
 
   if (isLoggedIn && hasRole && isOnOnboarding) {
-    return NextResponse.redirect(new URL("/", req.url))
+    return NextResponse.redirect(new URL("/dashboard", req.url))
   }
 
   return NextResponse.next()
