@@ -12,8 +12,9 @@ import { Suspense } from "react"
 export const revalidate = 60
 
 export async function generateMetadata({ params }) {
+  const { id } = await params
   const product = await prisma.product.findUnique({
-    where: { id: params.id },
+    where: { id},
   })
   if (!product) return { title: "Product not found" }
   return {
@@ -23,9 +24,12 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ProductDetailPage({ params }) {
+
+  const { id } = await params
+  
   const [product, session] = await Promise.all([
     prisma.product.findUnique({
-      where: { id: params.id, published: true },
+      where: { id, published: true },
       include: {
         seller: {
           select: { name: true, image: true },
