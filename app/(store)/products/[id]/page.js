@@ -115,7 +115,7 @@ export default async function ProductDetailPage({ params }) {
           {/* Price */}
           <div className="mt-6">
             <p className="text-4xl font-bold text-black dark:text-white">
-              ${product.price.toFixed(2)}
+              ₹{product.price.toFixed(2)}
             </p>
           </div>
 

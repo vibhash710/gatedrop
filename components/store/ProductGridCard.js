@@ -55,7 +55,7 @@ export default function ProductGridCard({ product }) {
 
           <div className="text-right">
             <p className="font-bold text-black dark:text-white">
-              ${product.price.toFixed(2)}
+              ₹{product.price.toFixed(2)}
             </p>
             <p className="text-xs text-gray-400 flex items-center gap-1 justify-end">
               <ShoppingBag className="w-3 h-3" />

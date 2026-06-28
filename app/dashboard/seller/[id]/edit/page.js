@@ -12,8 +12,10 @@ export default async function EditProductPage({ params }) {
     redirect("/dashboard")
   }
 
+  const { id } = await params
+
   const product = await prisma.product.findUnique({
-    where: { id: params.id },
+    where: { id },
   })
 
   if (!product || product.sellerId !== session.user.id) {

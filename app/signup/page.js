@@ -6,9 +6,11 @@ import { signIn } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { UserPlus, Eye, EyeOff } from "lucide-react"
 
 export default function SignupPage() {
     const [loading, setLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
     const router = useRouter()
 
     async function handleSubmit(e) {
@@ -53,9 +55,15 @@ export default function SignupPage() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-neutral-950">
             <div className="bg-white dark:bg-neutral-900 p-8 rounded-lg shadow w-full max-w-md">
-                <h1 className="text-2xl font-bold mb-6 text-center text-black dark:text-white">
-                    Create your account
-                </h1>
+                <div className="text-center mb-6">
+                    <h1 className="text-2xl font-bold text-black dark:text-white">
+                        Create your GateDrop account
+                    </h1>
+
+                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                        Start buying or selling digital products today.
+                    </p>
+                </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
@@ -86,20 +94,36 @@ export default function SignupPage() {
                         <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                             Password
                         </label>
-                        <input
-                            name="password"
-                            type="password"
-                            required
-                            className="w-full border dark:border-neutral-700 rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-neutral-800 dark:text-white"
-                        />
+                        <div className="relative">
+                            <input
+                                name="password"
+                                type={showPassword ? "text" : "password"}
+                                required
+                                className="w-full border dark:border-neutral-700 rounded-md px-3 py-2 pr-10 text-sm outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-neutral-800 dark:text-white"
+                            />
+
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black dark:hover:text-white"
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                            >
+                                {showPassword ? (
+                                    <EyeOff className="w-5 h-5" />
+                                ) : (
+                                    <Eye className="w-5 h-5" />
+                                )}
+                            </button>
+                        </div>
                     </div>
 
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-black dark:bg-white text-white dark:text-black py-2 rounded-md text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-black dark:bg-white text-white dark:text-black py-2 rounded-md text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
-                        {loading ? "Creating account..." : "Sign up"}
+                        <UserPlus className="w-4 h-4" />
+                        {loading ? "Creating account..." : "Create account"}
                     </button>
                 </form>
 

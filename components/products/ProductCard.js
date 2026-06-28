@@ -8,6 +8,17 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Edit, Trash2, Eye, EyeOff, Loader2, ShoppingBag } from "lucide-react"
 import { toast } from "sonner"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 export default function ProductCard({ product }) {
   const [loading, setLoading] = useState(false)
@@ -24,7 +35,6 @@ export default function ProductCard({ product }) {
   }
 
   async function handleDelete() {
-    if (!confirm("Are you sure you want to delete this product?")) return
     setLoading(true)
     const result = await deleteProductAction(product.id)
     if (result?.error) {
@@ -72,7 +82,7 @@ export default function ProductCard({ product }) {
 
         <div className="flex items-center gap-4 mt-2">
           <span className="text-sm font-medium text-black dark:text-white">
-            ${product.price.toFixed(2)}
+            ₹{product.price.toFixed(2)}
           </span>
           <span className="flex items-center gap-1 text-xs text-gray-500">
             <ShoppingBag className="w-3 h-3" />
@@ -104,16 +114,37 @@ export default function ProductCard({ product }) {
             </Link>
           </Button>
 
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleDelete}
-            disabled={loading}
-            className="text-red-500 hover:text-red-600 hover:border-red-300"
-          >
-            <Trash2 className="w-3 h-3 mr-1" />
-            Delete
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={loading}
+                className="text-red-500 hover:text-red-600 hover:border-red-300"
+              >
+                <Trash2 className="w-3 h-3 mr-1" />
+                Delete
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete this product?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. The product will be permanently removed.
+                  If it has existing purchases it cannot be deleted.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleDelete}
+                  className="bg-red-600 hover:bg-red-700 text-white"
+                >
+                  Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
 
