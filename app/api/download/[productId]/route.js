@@ -56,8 +56,17 @@ export async function GET(req, { params }) {
       expiresIn: 60,
     })
 
+    const downloadUrl = signedUrl.ufsUrl || signedUrl.url
+
+    if (!downloadUrl) {
+      return NextResponse.json(
+        { error: "Failed to generate download URL" },
+        { status: 500 }
+      )
+    }
+
     // Redirect to signed URL
-    return NextResponse.redirect(signedUrl.url)
+    return NextResponse.redirect(downloadUrl)
 
   } catch (err) {
     console.error("Download error:", err)
