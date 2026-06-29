@@ -30,7 +30,11 @@ export default function BuyButton({ productId, alreadyPurchased, isLoggedIn, use
         className="w-full"
         asChild
       >
-        <a href={`/api/download/${productId}`}>
+        <a
+          href={`/api/download/${productId}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Download className="w-4 h-4 mr-2" />
           Download
         </a>

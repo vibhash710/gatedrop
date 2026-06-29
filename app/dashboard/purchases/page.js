@@ -98,7 +98,11 @@ export default async function PurchasesPage({ searchParams }) {
                   ₹{purchase.product.price.toFixed(2)}
                 </span>
                 <Button size="sm" asChild>
-                  <a href={`/api/download/${purchase.product.id}`}>
+                  <a
+                    href={`/api/download/${purchase.product.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Download className="w-3 h-3 mr-1" />
                     Download
                   </a>
