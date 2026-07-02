@@ -268,6 +268,7 @@ export default function ProductForm({ product }) {
                         "application/zip": [],
                         "video/*": [],
                         "audio/*": [],
+                        "image/*": [],
                       }}
                       icon={FileIcon}
                       hint="Upload your Digital Product"

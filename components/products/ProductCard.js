@@ -49,7 +49,7 @@ export default function ProductCard({ product }) {
     <div className="bg-white dark:bg-neutral-900 border dark:border-neutral-800 rounded-xl p-4 flex gap-4">
 
       {/* Cover image */}
-      <div className="relative w-24 h-24 rounded-lg overflow-hidden shrink-0 bg-gray-100 dark:bg-neutral-800">
+      <div className="relative w-16 h-16 sm:w-24 sm:h-24 rounded-lg overflow-hidden shrink-0 bg-gray-100 dark:bg-neutral-800">
         {product.coverImageUrl ? (
           <Image
             src={product.coverImageUrl}
@@ -58,29 +58,32 @@ export default function ProductCard({ product }) {
             className="object-cover"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-400">
+          <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs text-center px-1">
             No image
           </div>
         )}
       </div>
 
       {/* Info */}
-      <div className="flex-1 min-w-0">
-        <div className="flex items-start justify-between gap-2">
-          <div>
+      <div className="flex-1 min-w-0 flex flex-col gap-2.5">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
             <h3 className="font-semibold text-black dark:text-white truncate">
               {product.title}
             </h3>
-            <p className="text-sm text-gray-500 mt-0.5 line-clamp-1">
-              {product.description}
-            </p>
+            <Badge
+              variant={product.published ? "default" : "secondary"}
+              className="shrink-0 text-[10px] px-1.5 py-0"
+            >
+              {product.published ? "Live" : "Draft"}
+            </Badge>
           </div>
-          <Badge variant={product.published ? "default" : "secondary"}>
-            {product.published ? "Live" : "Draft"}
-          </Badge>
+          <p className="text-sm text-gray-500 mt-1 line-clamp-1">
+            {product.description}
+          </p>
         </div>
 
-        <div className="flex items-center gap-4 mt-2">
+        <div className="flex items-center gap-4">
           <span className="text-sm font-medium text-black dark:text-white">
             ₹{product.price.toFixed(2)}
           </span>
@@ -91,7 +94,7 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-2 mt-3">
+        <div className="flex flex-wrap items-center gap-2">
           <Button
             variant="outline"
             size="sm"
@@ -126,7 +129,7 @@ export default function ProductCard({ product }) {
                 Delete
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className="max-w-[90vw] sm:max-w-lg rounded-lg">
               <AlertDialogHeader>
                 <AlertDialogTitle>Delete this product?</AlertDialogTitle>
                 <AlertDialogDescription>
@@ -134,7 +137,7 @@ export default function ProductCard({ product }) {
                   If it has existing purchases it cannot be deleted.
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <AlertDialogFooter>
+              <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-0">
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={handleDelete}

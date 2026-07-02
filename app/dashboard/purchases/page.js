@@ -24,7 +24,8 @@ export default async function PurchasesPage({ searchParams }) {
     },
   })
 
-  const showSuccess = searchParams?.success === "true"
+  const params = await searchParams
+  const showSuccess = params?.success === "true"
 
   return (
     <div>
