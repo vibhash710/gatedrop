@@ -6,7 +6,7 @@ import { signIn } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { UserPlus, Eye, EyeOff, User, Mail, Lock, BadgeCheck } from "lucide-react"
+import { UserPlus, Eye, EyeOff, User, Mail, Lock} from "lucide-react"
 
 export default function SignupPage() {
     const [loading, setLoading] = useState(false)

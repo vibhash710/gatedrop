@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { selectRoleAction } from "@/lib/actions/user.actions"
+import { useRouter } from "next/navigation"
 import { ShoppingBag, Store, ArrowRight, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
@@ -29,6 +30,8 @@ export default function RoleSelector({ userName }) {
   const [selected, setSelected] = useState(null)
   const [loading, setLoading] = useState(false)
 
+  const router = useRouter()
+
   async function handleContinue() {
     if (!selected) return
     setLoading(true)
@@ -38,8 +41,9 @@ export default function RoleSelector({ userName }) {
       if (result?.error) {
         toast.error(result.error)
         setLoading(false)
+        return
       }
-      // if no error, selectRoleAction redirects server-side
+      router.push(result.redirectTo)
     } catch (err) {
       toast.error("Something went wrong")
       setLoading(false)
@@ -59,11 +63,10 @@ export default function RoleSelector({ userName }) {
             <button
               key={role.id}
               onClick={() => setSelected(role.id)}
-              className={`relative text-left p-6 rounded-xl border-2 transition-all duration-150 ${
-                isSelected
+              className={`relative text-left p-6 rounded-xl border-2 transition-all duration-150 ${isSelected
                   ? "border-black dark:border-white bg-neutral-50 dark:bg-neutral-800"
                   : "border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 hover:border-gray-300 dark:hover:border-neutral-600"
-              }`}
+                }`}
             >
               {/* Checkmark when selected */}
               {isSelected && (
@@ -73,16 +76,14 @@ export default function RoleSelector({ userName }) {
               )}
 
               <div className="mb-4">
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-3 ${
-                  isSelected
+                <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-3 ${isSelected
                     ? "bg-black dark:bg-white"
                     : "bg-gray-100 dark:bg-neutral-800"
-                }`}>
-                  <Icon className={`w-6 h-6 ${
-                    isSelected
+                  }`}>
+                  <Icon className={`w-6 h-6 ${isSelected
                       ? "text-white dark:text-black"
                       : "text-gray-600 dark:text-gray-400"
-                  }`} />
+                    }`} />
                 </div>
 
                 <h2 className="text-lg font-semibold text-black dark:text-white mb-1">
