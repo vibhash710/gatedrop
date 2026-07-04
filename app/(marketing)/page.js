@@ -3,6 +3,7 @@ import { ArrowRight, LayoutGrid } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { auth } from "@/lib/auth"
 import StoreNavbar from "@/components/store/StoreNavbar"
+import Footer from "@/components/store/Footer"
 
 const CATEGORIES = ["Courses", "Ebooks", "Templates", "Code", "Design assets"]
 
@@ -10,10 +11,10 @@ export default async function HomePage() {
   const session = await auth()
 
   return (
-    <div className="min-h-screen bg-[#FAFAF7] dark:bg-neutral-950">
+    <div className="min-h-screen flex flex-col bg-[#FAFAF7] dark:bg-neutral-950">
       <StoreNavbar />
 
-      <main className="relative">
+      <main className="flex-1 relative">
         <div className="relative max-w-4xl mx-auto px-4 flex flex-col items-center justify-center min-h-[85vh] text-center">
 
           <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-8">
@@ -84,6 +85,8 @@ export default async function HomePage() {
           </div>
         </div>
       </main>
+
+       <Footer />
 
       <style>{`
         @keyframes gate-left {

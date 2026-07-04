@@ -3,7 +3,6 @@ import { auth } from "@/lib/auth"
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
 import { ShoppingBag, Calendar, FileDown } from "lucide-react"
 import BuyButton from "@/components/store/BuyButton"
 import { Suspense } from "react"
@@ -62,11 +61,11 @@ export default async function ProductDetailPage({ params }) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
 
         {/* Left — Cover image */}
-        <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-gray-100 dark:bg-neutral-800">
+        <div className="relative w-full aspect-[4/3] md:aspect-square rounded-xl overflow-hidden bg-gray-100 dark:bg-neutral-800">
           {product.coverImageUrl ? (
             <Image
               src={product.coverImageUrl}

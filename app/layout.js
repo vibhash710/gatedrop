@@ -10,6 +10,9 @@ const geist = Geist({ subsets: ["latin"] })
 export const metadata = {
   title: "GateDrop",
   description: "Digital product marketplace",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({ children }) {

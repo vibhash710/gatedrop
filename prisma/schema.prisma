@@ -20,6 +20,7 @@ model User {
   role          Role?      
   createdAt     DateTime   @default(now())
   emailVerified DateTime?
+  deletedAt     DateTime?
 
   accounts      Account[]
   products      Product[]
