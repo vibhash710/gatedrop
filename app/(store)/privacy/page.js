@@ -31,7 +31,7 @@ export default function PrivacyPage() {
                         <li>To authenticate your account and maintain your session</li>
                         <li>To process purchases and grant file download access</li>
                         <li>To display your products if you are a seller</li>
-                        <li>To facilitate seller payouts (upcoming feature)</li>
+                        <li>To calculate seller earnings and maintain transaction records.</li>
                         <li>To send transactional emails related to your purchases</li>
                     </ul>
                 </section>

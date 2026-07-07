@@ -21,7 +21,7 @@ export async function POST(req) {
       productId,
     } = await req.json()
 
-    // Verify signature — this proves payment came from Razorpay
+    // Verify signature
     const body = razorpay_order_id + "|" + razorpay_payment_id
     const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
@@ -35,7 +35,31 @@ export async function POST(req) {
       )
     }
 
-    // Check if purchase already exists (prevent duplicates)
+    // Get product price
+    const product = await prisma.product.findUnique({
+      where: { id: productId },
+      select: { price: true, sellerId: true },
+    })
+
+    if (!product) {
+      return NextResponse.json(
+        { error: "Product not found" },
+        { status: 404 }
+      )
+    }
+
+    // Get commission config
+    const config = await prisma.platformConfig.findFirst()
+    const commissionPercent = config?.commissionPercent ?? 10
+
+    // Calculate amounts
+    const amount = product.price
+    const platformFee = parseFloat(
+      ((amount * commissionPercent) / 100).toFixed(2)
+    )
+    const sellerEarnings = parseFloat((amount - platformFee).toFixed(2))
+
+    // Check duplicate
     const existing = await prisma.purchase.findUnique({
       where: { paymentId: razorpay_payment_id },
     })
@@ -45,7 +69,11 @@ export async function POST(req) {
         data: {
           userId: session.user.id,
           productId,
-          paymentId: razorpay_payment_id, // reusing field for payment ID
+          sellerId: product.sellerId,
+          paymentId: razorpay_payment_id,
+          amount,
+          platformFee,
+          sellerEarnings,
         },
       })
     }

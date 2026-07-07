@@ -25,6 +25,8 @@ model User {
   accounts      Account[]
   products      Product[]
   purchases     Purchase[]
+  sellerPurchases Purchase[] @relation("SellerPurchases")
+  payouts       Payout[]
 }
 
 model Account {
@@ -71,12 +73,32 @@ model Product {
 model Purchase {
   id              String   @id @default(cuid())
   createdAt       DateTime @default(now())
-  paymentId String   @unique
+  paymentId       String   @unique
+  amount          Float    
+  platformFee     Float    
+  sellerEarnings  Float
 
   userId          String
   user            User     @relation(fields: [userId], references: [id])
 
   productId       String
   product         Product  @relation(fields: [productId], references: [id])
+
+  sellerId        String
+  seller          User     @relation("SellerPurchases", fields: [sellerId], references: [id])
+}
+
+model PlatformConfig {
+  id                String @id @default(cuid())
+  commissionPercent Float  @default(10)
+}
+
+model Payout {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  amount    Float
+  note      String?
+  sellerId  String
+  seller    User     @relation(fields: [sellerId], references: [id])
 }
 

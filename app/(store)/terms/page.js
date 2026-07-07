@@ -47,7 +47,11 @@ export default function TermsPage() {
 
                 <section className="p-6">
                     <h2 className="text-base font-semibold text-black dark:text-white mb-2">Payments and Commission</h2>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Payments are processed securely by Razorpay. GateDrop currently operates in a beta phase. A platform commission structure for sellers will be introduced in a future update. Sellers will be notified before any commission policy takes effect.</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Payments are processed securely by Razorpay. GateDrop charges a
+                        <span className="font-medium text-black dark:text-white"> 10% platform commission </span>
+                        on each sale. Sellers receive 90% of the product price. Earnings are
+                        tracked in your seller dashboard and settled manually. Sellers will be
+                        notified before any changes to the commission rate take effect.</p>
                 </section>
 
                 <section className="p-6">
