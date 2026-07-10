@@ -10,6 +10,7 @@ export default auth((req) => {
   const isOnDashboard = path.startsWith("/dashboard")
   const isOnOnboarding = path === "/onboarding"
   const isOnAuthPage = path === "/login" || path === "/signup"
+  const isOnVerifyEmail = path === "/verify-email"
 
   if (isLoggedIn && isOnAuthPage) {
     return NextResponse.redirect(new URL("/", req.url))
@@ -20,6 +21,10 @@ export default auth((req) => {
     // redirect back after login
     loginUrl.searchParams.set("callbackUrl", req.nextUrl.href)
     return NextResponse.redirect(loginUrl)
+  }
+
+  if (isLoggedIn && !user?.emailVerified && !isOnVerifyEmail) {
+    return NextResponse.redirect(new URL("/verify-email", req.url))
   }
 
   if (isLoggedIn && !hasRole && !isOnOnboarding) {
@@ -34,5 +39,5 @@ export default auth((req) => {
 })
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/onboarding", "/login", "/signup"],
+  matcher: ["/dashboard/:path*", "/onboarding", "/login", "/signup", "/verify-email"],
 }

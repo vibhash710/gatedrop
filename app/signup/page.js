@@ -2,11 +2,10 @@
 
 import { useState } from "react"
 import { signUpAction } from "@/lib/actions/auth.actions"
-import { signIn } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { UserPlus, Eye, EyeOff, User, Mail, Lock} from "lucide-react"
+import { UserPlus, Eye, EyeOff, User, Mail, Lock } from "lucide-react"
 
 export default function SignupPage() {
     const [loading, setLoading] = useState(false)
@@ -34,19 +33,9 @@ export default function SignupPage() {
                 return
             }
 
-            const login = await signIn("credentials", {
-                email,
-                password,
-                redirect: false,
-            })
-
-            if (login?.error) {
-                toast.error("Account created but login failed")
-                return
-            }
-
-            router.push("/dashboard")
-            router.refresh()
+            // Store email in sessionStorage for verify page
+            sessionStorage.setItem("verifyEmail", email)
+            router.push("/verify-email")
 
         } catch (err) {
             toast.error("Something went wrong")

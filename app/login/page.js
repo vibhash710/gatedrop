@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { signIn } from "next-auth/react"
 import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
 import { Suspense } from "react"
 import { toast } from "sonner"
 import { LogIn, Eye, EyeOff, Mail, Lock } from "lucide-react"
@@ -13,6 +13,7 @@ function LoginForm() {
     const [showPassword, setShowPassword] = useState(false)
     const router = useRouter()
     const searchParams = useSearchParams()
+    const pathname = usePathname()
 
     const callbackUrl = searchParams.get("callbackUrl") || "/dashboard"
 
@@ -31,10 +32,20 @@ function LoginForm() {
 
     useEffect(() => {
         const errorParam = searchParams.get("error")
+        const verified = searchParams.get("verified")
+
+        if (verified === "true") {
+            toast.success("Email verified! Sign in to continue.")
+
+            // Remove the query parameter so the toast doesn't show again on refresh
+            router.replace(pathname)
+            return
+        }
+
         if (errorParam) {
             toast.error(getAuthErrorMessage(errorParam))
         }
-    }, [searchParams])
+    }, [searchParams, router, pathname])
 
     async function handleSubmit(e) {
         e.preventDefault()

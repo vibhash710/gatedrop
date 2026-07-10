@@ -102,3 +102,13 @@ model Payout {
   seller    User     @relation(fields: [sellerId], references: [id])
 }
 
+model VerificationToken {
+  id        String   @id @default(cuid())
+  email     String
+  otp       String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
