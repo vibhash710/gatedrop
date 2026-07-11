@@ -33,11 +33,18 @@ function LoginForm() {
     useEffect(() => {
         const errorParam = searchParams.get("error")
         const verified = searchParams.get("verified")
+        const reset = searchParams.get("reset")
 
         if (verified === "true") {
             toast.success("Email verified! Sign in to continue.")
 
             // Remove the query parameter so the toast doesn't show again on refresh
+            router.replace(pathname)
+            return
+        }
+
+        if (reset === "true") {
+            toast.success("Password reset! Sign in with your new password.")
             router.replace(pathname)
             return
         }
@@ -150,11 +157,22 @@ function LoginForm() {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                            Password
-                        </label>
+                        <div className="flex items-center justify-between mb-1">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                Password
+                            </label>
+
+                            <Link
+                                href="/forgot-password"
+                                className="text-xs text-gray-500 hover:text-black dark:hover:text-white"
+                            >
+                                Forgot password?
+                            </Link>
+                        </div>
+
                         <div className="relative">
                             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+
                             <input
                                 name="password"
                                 type={showPassword ? "text" : "password"}
@@ -167,7 +185,6 @@ function LoginForm() {
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black dark:hover:text-white"
-                                aria-label={showPassword ? "Hide password" : "Show password"}
                             >
                                 {showPassword ? (
                                     <EyeOff className="w-5 h-5" />
