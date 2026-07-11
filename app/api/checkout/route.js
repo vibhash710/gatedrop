@@ -2,8 +2,20 @@ import { NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { getRazorpay } from "@/lib/razorpay"
+import { rateLimits } from "@/lib/ratelimit"
+import { getIdentifier } from "@/lib/getRateLimitIdentifier"
 
 export async function POST(req) {
+  // Rate limit check
+  const identifier = await getIdentifier()
+  const { success } = await rateLimits.checkout.limit(identifier)
+
+  if (!success) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 }
+    )
+  }
   try {
     const session = await auth()
 

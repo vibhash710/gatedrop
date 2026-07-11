@@ -2,10 +2,21 @@ import { NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { UTApi } from "uploadthing/server"
+import { rateLimits } from "@/lib/ratelimit"
+import { getIdentifier } from "@/lib/getRateLimitIdentifier"
 
 const utapi = new UTApi()
 
 export async function GET(req, { params }) {
+  const identifier = await getIdentifier()
+  const { success } = await rateLimits.download.limit(identifier)
+
+  if (!success) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 }
+    )
+  }
   try {
     const session = await auth()
 
