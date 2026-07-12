@@ -186,10 +186,13 @@ export default function ProductForm({ product }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Cover Image</FormLabel>
+              <p className="text-xs text-gray-500 dark:text-gray-400 -mt-1 mb-2">
+                Square images work best — recommended 1200×1200px or larger.
+              </p>
               <FormControl>
                 <div>
                   {coverImageUrl ? (
-                    <div className="relative w-full h-48 rounded-lg overflow-hidden border dark:border-neutral-700">
+                    <div className="relative w-full max-w-xs aspect-square rounded-lg overflow-hidden border dark:border-neutral-700">
                       <Image src={coverImageUrl} alt="Cover" fill className="object-cover" />
                       <button
                         type="button"
